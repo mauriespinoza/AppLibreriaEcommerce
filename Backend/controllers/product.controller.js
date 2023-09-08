@@ -20,7 +20,34 @@ export const getProductById = async(req, res) => {
         res.status(404).json({message: 'No pudimos encontrar al productos'})
     }
 }
+export const createProduct = async (req, res) => { //createUser
+    try {
+        const {nombre, descripcion, imagen, cantidad, valor, familyproducts} = req.body
 
+        if(!nombre || !descripcion || !cantidad || !valor || !familyproducts) {
+            return res.status(400).json({ message: "Debes rellenar todos los campos"})
+        }
+
+        // const verifyProduct = await User.findOne({ rut: rut })
+        // if(verifyProduct) {
+        //     return res.status(500).json({ message: 'El rut ingresado ya tiene una cuenta' })
+        // }
+
+
+        const product = new Product({
+            nombre,
+            descripcion,
+            imagen,
+            cantidad,
+            valor,
+            familyproducts
+        })
+        const saveProduct = await product.save();
+        res.status(201).json({message: `El usuario ${saveProduct.nombre} ha sido creado con éxito`})
+    }catch(error){
+        res.status(500).json({message: 'No pudimos crear el producto'})
+    }
+}
 export const updateProduct = async (req, res) => {
     try {
         const productId = req.params.id
