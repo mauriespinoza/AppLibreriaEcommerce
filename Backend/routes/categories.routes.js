@@ -4,7 +4,8 @@ const router = express.Router()
 import { deleteCategoriesById, getAllCategories, getCategoriesById, updateCategories, createCategories} from '../controllers/categories.controller.js'
 import { authRequire } from '../middlewares/auth.middleware.js'
 
-router.get('/categories', authRequire, getAllCategories)
+// router.get('/categories', authRequire, getAllCategories)
+router.get('/categories', getAllCategories)
 
 router.get('/categories/:id', authRequire, getCategoriesById)
 

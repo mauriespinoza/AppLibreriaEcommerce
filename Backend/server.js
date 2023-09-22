@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors'
 import userRouter from './routes/user.routes.js'
 import productRouter from './routes/product.routes.js'
 import familyproductRouter from './routes/familyproduct.routes.js'
@@ -14,6 +15,7 @@ const app = express()
 //Middlewares
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
+app.use(cors());
 //Middlewares de rutas
 app.use('/api/v1', userRouter)
 app.use('/api/v1', productRouter)

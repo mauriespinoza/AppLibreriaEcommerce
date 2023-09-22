@@ -22,9 +22,9 @@ export const getProductById = async(req, res) => {
 }
 export const createProduct = async (req, res) => { //createUser
     try {
-        const {nombre, descripcion, imagen, cantidad, valor, familyproducts} = req.body
+        const {nombre, descripcion, imagen, cantidad, valor, categories} = req.body
 
-        if(!nombre || !descripcion || !cantidad || !valor || !familyproducts) {
+        if(!nombre || !descripcion || !cantidad || !valor || !categories) {
             return res.status(400).json({ message: "Debes rellenar todos los campos"})
         }
 
@@ -40,7 +40,7 @@ export const createProduct = async (req, res) => { //createUser
             imagen,
             cantidad,
             valor,
-            familyproducts
+            categories
         })
         const saveProduct = await product.save();
         res.status(201).json({message: `El usuario ${saveProduct.nombre} ha sido creado con éxito`})

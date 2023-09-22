@@ -1,0 +1,17 @@
+.navbar{
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color:#d7f8fa;
+    height: 85px;
+    /* align-items:end; */
+}
+#logo{
+    height: 80px;
+}
+#navbar{
+    background-color: rgb(238, 224, 30);
+}
+#img-login{
+    width: 45px;
+    height: 45px;
+}
