@@ -1,9 +1,9 @@
 
-import { ProductList } from '../../components/card/ProductList';
+import { ProductsList } from '../../components/card/ProductsList';
 export const Products = () => {
   return (
     <>
-    <ProductList/>
+    <ProductsList/>
     </>
   )
 }

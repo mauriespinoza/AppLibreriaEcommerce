@@ -3,12 +3,14 @@ import { axiosClient } from "../../config/api";
 import Row from "react-bootstrap/Row";
 import { Pagination } from "../../components/card/Pagination";
 import "./productList.css";
-import ProductsContext from "../../context/ProductsContext";
+import ProductsContext from "../../context/ProductContext";
+import { useProduct } from "../../hooks/useProduct";
 export const ProductList = () => {
-  const [products, setProducts] = useState([]);
-  const globalContext = useContext(ProductsContext);
+  const {products} = useProduct();
+  // console.log(products.length);
+  // const globalContext = useContext(ProductsContext);
 
-  const {productsData,getProducts} = globalContext;
+  // const {productsData,getProducts} = globalContext;
   const totalProducts = products.length;
 
   const [productsPerPage, setProductsPerPage] = useState(4);
@@ -27,7 +29,7 @@ export const ProductList = () => {
   //   }
   // };
   useEffect(() => {
-    getProducts();
+    // getProducts();
   }, []);
   function FormatCLP(price) {
     return new Intl.NumberFormat().format(price);
@@ -36,7 +38,7 @@ export const ProductList = () => {
     <>
       <div className="card-container">
         <Row className="g-4" xs={1} md={4}>
-          {productsData
+          {products
             .map((product) => (
               <div className="card" key={product.id}>
                 <figure className="figure">

@@ -1,4 +1,4 @@
-export const reducer = (globalState, action) => {
+export const productReducer = (globalState, action) => {
 
     switch(action.type) {
         case "GETS_PRODUCTS":

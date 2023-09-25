@@ -1,13 +1,20 @@
 // import logo from '../../../public/icon-candelabra.jpg';
-import { useState, useEffect, useContext } from "react";
+import { useContext,useState, useEffect } from "react";
+import CategoriesContext from "../../context/CategorieContext";
 import { axiosClient } from "../../config/api";
 // import Select from 'react-select';
 import "./navbar.css";
 import { UserIcon } from "../user/UserIcon";
-import CategoriesContext from "../../context/CategoriesContext";
+
 export const NavBar = () => {
+
   const [categories, setCategories] = useState([]);
-  const [selectedValue, setSelectedValue] = useState("");
+
+  const globalContext = useContext(CategoriesContext);
+
+   const {getCategories} = globalContext;
+
+  // const [selectedValue, setSelectedValue] = useState("");
   const rol = "admin";
 
   //obtenemos las categorias desde la BD
@@ -20,18 +27,21 @@ export const NavBar = () => {
   //     console.log(error);
   //   }
   // };
-  const globalContext = useContext(CategoriesContext);
+  
 
-  const {categoriesData,getCategories} = globalContext;
+   const getAllCategories = async() =>{
+    const data = await getCategories();
+    setCategories(data);
+   }
   // console.log("categoriesData:" + JSON.stringify( categoriesData));
   // console.log("getCategories:" + JSON.stringify( getCategories));
   useEffect(() => {
-    getCategories();
+    getAllCategories()
   }, []);
 
   const handleChangeCategories = (categorie) => {
     console.log(categorie);
-    setSelectedValue(categorie);
+    // setSelectedValue(categorie);
   };
   console.log(categories);
   return (
@@ -104,7 +114,7 @@ export const NavBar = () => {
                 </a>
 
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  {categoriesData.map((categoria) => (
+                  {categories.map((categoria) => (
                     <li key={categoria.id} >
                       <a className="dropdown-item" href="#" onClick={()=> handleChangeCategories(categoria.description)} >
                         {categoria.description}
