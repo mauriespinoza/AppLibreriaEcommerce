@@ -4,6 +4,7 @@ import userRouter from './routes/user.routes.js'
 import productRouter from './routes/product.routes.js'
 import familyproductRouter from './routes/familyproduct.routes.js'
 import categoriesRouter from './routes/categories.routes.js'
+import { corsOptions } from './middlewares/cors.middleware.js';
 import { db } from './config/db.config.js'
 
 import dotenv from 'dotenv'
@@ -15,7 +16,10 @@ const app = express()
 //Middlewares
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-app.use(cors());
+
+//middlewares CORS
+//app.use(cors());
+app.use(cors(corsOptions));
 //Middlewares de rutas
 app.use('/api/v1', userRouter)
 app.use('/api/v1', productRouter)
