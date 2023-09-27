@@ -7,7 +7,7 @@ import { authRequire } from '../middlewares/auth.middleware.js'
 // router.get('/categories', authRequire, getAllCategories)
 router.get('/categories', getAllCategories)
 
-router.get('/categories/:id', authRequire, getCategoriesById)
+router.get('/categories/:id', getCategoriesById)
 
 router.post('/categories/', authRequire, createCategories)
 

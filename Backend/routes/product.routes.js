@@ -9,7 +9,7 @@ router.get('/products', getAllProducts)
 
 router.get('/products/:id', getProductById)
 
-router.get('/products/:categorie', getProductByCategory)
+router.get('/productscategory/:category', getProductByCategory)
 
 router.post('/products', authRequire, createProduct)
 

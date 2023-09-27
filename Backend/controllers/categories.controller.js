@@ -14,7 +14,7 @@ export const getAllCategories = async (req, res) => {
 export const getCategoriesById = async(req, res) => {
     try {
         const {id} = req.params
-        const getCategories = await Categories.findOne({id: id})
+        const getCategories = await Categories.findOne({_id: id})
         res.status(200).json(getCategories)
     } catch (error) {
         res.status(404).json({message: 'No pudimos encontrar Categories'})
@@ -50,7 +50,7 @@ export const updateCategories = async (req, res) => {
         const categoriesId = req.params.id
         const updateData = req.body
         
-        const updateCategories = await Categories.findOneAndUpdate({ id: categoriesId }, updateData, { new: true } )
+        const updateCategories = await Categories.findOneAndUpdate({ _id: categoriesId }, updateData, { new: true } )
         if (!updateCategories) {
            return res.status(404).json({ message: 'Categories no encontrado'})
         }
@@ -65,7 +65,7 @@ export const deleteCategoriesById = async (req, res) => {
     try {
         const categoriesId = req.params.id
 
-        const removeCategories = await Categories.findOneAndDelete({id: categoriesId})
+        const removeCategories = await Categories.findOneAndDelete({_id: categoriesId})
         if(!removeCategories) {
             return res.status(404).json({ message: "Categories no encontrado para eliminar" })
         }

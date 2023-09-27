@@ -14,9 +14,11 @@ export const getAllProducts = async (req, res) => {
 
 export const getProductById = async(req, res) => {
     try {
+        
+        console.log('getProductById: ' + req.params.id);
         const {id} = req.params;
         // const {rut} = req.params
-        const getProducts = await Product.findOne({id: id})
+        const getProducts = await Product.findOne({_id: id})
         //const getProducts = await Product.findOne({id: id})
         res.status(200).json(getProducts)
     } catch (error) {
@@ -26,18 +28,26 @@ export const getProductById = async(req, res) => {
 
 export const getProductByCategory = async( req, res) => {
     try{
-        const {categorie} = req.params
-        //const getProducts = await Product.findOne({id: id})
-        Product.find()
-        .populate('categories')
-        .exec(function(err,product) {
-            if(err){
-                res.status(404).json({message: 'No pudimos encontrar alos productos'})
-            } else{
-                res.status(200).json(product)
-            }
-        })
+        console.log('getProductByCategory');
+        const {category} = req.params
+        console.log(category);
+        const getProducts = await Product.find({categories: category})
+        console.log('getProducts.length' + getProducts.length);
+        if(!getProducts){
+            return res.status(404).json({message: 'Productos no encontrados por categorias'})
+        }
+        res.status(200).json(getProducts)
+        // Product.find()
+        // .populate('categories')
+        // .exec(function(err,product) {
+        //     if(err){
+        //         res.status(404).json({message: 'No pudimos encontrar alos productos'})
+        //     } else{
+        //         res.status(200).json(product)
+        //     }
+        // })
     } catch(error){
+        console.log(error)
         res.status(404).json({message: 'No pudimos encontrar los productos'})
     }
 }
@@ -74,7 +84,7 @@ export const updateProduct = async (req, res) => {
         const productId = req.params.id
         const updateData = req.body
         
-        const updateUser = await Product.findOneAndUpdate({ id: productId }, updateData, { new: true } )
+        const updateUser = await Product.findOneAndUpdate({ _id: productId }, updateData, { new: true } )
         if (!updateUser) {
            return res.status(404).json({ message: 'Producto no encontrado'})
         }
@@ -89,7 +99,7 @@ export const deleteProductById = async (req, res) => {
     try {
         const productId = req.params.id
 
-        const removeProduct = await Product.findOneAndDelete({id: productId})
+        const removeProduct = await Product.findOneAndDelete({_id: productId})
         if(!removeUser) {
             return res.status(404).json({ message: "Producto no encontrado para eliminar" })
         }
