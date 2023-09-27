@@ -18,8 +18,8 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 //middlewares CORS
-//app.use(cors());
-app.use(cors(corsOptions));
+app.use(cors());
+//app.use(cors(corsOptions));
 //Middlewares de rutas
 app.use('/api/v1', userRouter)
 app.use('/api/v1', productRouter)

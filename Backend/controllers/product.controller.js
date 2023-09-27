@@ -1,4 +1,5 @@
 import {Product} from '../models/Products.model.js'
+import { Categories } from '../models/Categories.models.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
@@ -13,11 +14,31 @@ export const getAllProducts = async (req, res) => {
 
 export const getProductById = async(req, res) => {
     try {
-        const {rut} = req.params
+        const {id} = req.params;
+        // const {rut} = req.params
         const getProducts = await Product.findOne({id: id})
+        //const getProducts = await Product.findOne({id: id})
         res.status(200).json(getProducts)
     } catch (error) {
-        res.status(404).json({message: 'No pudimos encontrar al productos'})
+        res.status(404).json({message: 'No pudimos encontrar alos productos'})
+    }
+}
+
+export const getProductByCategory = async( req, res) => {
+    try{
+        const {categorie} = req.params
+        //const getProducts = await Product.findOne({id: id})
+        Product.find()
+        .populate('categories')
+        .exec(function(err,product) {
+            if(err){
+                res.status(404).json({message: 'No pudimos encontrar alos productos'})
+            } else{
+                res.status(200).json(product)
+            }
+        })
+    } catch(error){
+        res.status(404).json({message: 'No pudimos encontrar los productos'})
     }
 }
 export const createProduct = async (req, res) => { //createUser
