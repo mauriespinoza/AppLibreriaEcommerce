@@ -4,13 +4,15 @@ import Row from "react-bootstrap/Row";
 import { Pagination } from "../../components/card/Pagination";
 import "./productList.css";
 import ProductsContext from "../../context/ProductContext";
-
+import { useProduct } from "../../hooks/useProduct";
 export const ProductsList = () => {
     const [products, setProducts]=useState([]);
+
     // console.log(products.length);
      const globalContext = useContext(ProductsContext);
   
      const {getProducts} = globalContext;
+     
     const totalProducts = products.length;
 
     const getAllProducts = async () => {
@@ -45,7 +47,7 @@ export const ProductsList = () => {
           <Row className="g-4" xs={1} md={4}>
             {products
               .map((product) => (
-                <div className="card" key={product.id}>
+                <div className="card" key={product._id}>
                   <figure className="figure">
                     <img src={product.imagen} alt={product.descripcion} />
                   </figure>

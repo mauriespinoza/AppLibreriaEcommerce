@@ -6,7 +6,11 @@ export const productReducer = (globalState, action) => {
                 ...globalState,
                 newProducts: action.payload
             }
-
+        case "GETS_PRODUCTS_CATEGORY":
+            return{
+                ...globalState,
+                newProducts: action.payload
+            }
         default: 
             return globalState
     }

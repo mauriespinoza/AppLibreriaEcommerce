@@ -4,6 +4,7 @@ import {categorieReducer} from './CategorieReducer';
 import { axiosClient } from '../config/api';
 export const CategorieState = ({children}) => {
 
+   console.log("Children: " + children);
   //const [categoriesState, setCategoriesState] = useState([]);
     const initialState = {
         categories:[],

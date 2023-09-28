@@ -1,49 +1,36 @@
-// import logo from '../../../public/icon-candelabra.jpg';
-import { useContext,useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import CategoriesContext from "../../context/CategorieContext";
 import { axiosClient } from "../../config/api";
-// import Select from 'react-select';
 import "./navbar.css";
 import { UserIcon } from "../user/UserIcon";
-
+import { BadgeButton } from "../card/BadgeButton";
+import { BadgeButtonUser } from "../badge/BadgeButtonUser";
+import {BadgeButtonSearch} from "../badge/BadgeButtonSearch";
 export const NavBar = () => {
-
   const [categories, setCategories] = useState([]);
 
   const globalContext = useContext(CategoriesContext);
 
-   const {getCategories} = globalContext;
+  const { getCategories } = globalContext;
 
-  // const [selectedValue, setSelectedValue] = useState("");
   const rol = "admin";
 
-  //obtenemos las categorias desde la BD
-  // const getCategories = async () => {
-  //   try {
-  //     const response = await axiosClient.get("/categories");
-  //     console.log(response);
-  //     setCategories(response.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  
-
-   const getAllCategories = async() =>{
+  const getAllCategories = async () => {
     const data = await getCategories();
     setCategories(data);
-   }
-  // console.log("categoriesData:" + JSON.stringify( categoriesData));
-  // console.log("getCategories:" + JSON.stringify( getCategories));
+  };
+
   useEffect(() => {
-    getAllCategories()
+    getAllCategories();
   }, []);
 
   const handleChangeCategories = (categorie) => {
     console.log(categorie);
-    // setSelectedValue(categorie);
   };
+
   console.log(categories);
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-">
@@ -65,42 +52,10 @@ export const NavBar = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
+                <a className="nav-link active" aria-current="page" href="/">
                   Inicio
                 </a>
               </li>
-              {/* <select> 
-                <option value="Categorias"> -- Categorias -- </option>
-                { 
-                  categories.map((categorie,index) => 
-                    <option  key={index} value={
-                      categorie.description}>
-                        </option>)}
-              </select> */}
-              {/* <Select options={categories} /> */}
-              {/* <div className="container">
-                <div className="row">
-                  <div className="col-md-3"></div>
-                  <div className="col-md-6">
-                    <Select 
-                        defaultValue={categories}
-                        options={categories}
-                        onChange={handleChangeCategories}
-                        />
-                  </div>
-                  <div className="col-md-4"></div>
-                </div>
-              </div> */}
-              {/* <select onChange={handleChangeCategories} className="nav-item dropdown">
-                <option value="" className="nav-link dropdown-toggle" />
-                {categories.map((categorie, index) => {
-                  return (
-                    <option key={index} value={categorie.name} className="nav-link dropdown-toggle">
-                      {categorie.name}
-                    </option>
-                  );
-                })}
-              </select> */}
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
@@ -115,10 +70,16 @@ export const NavBar = () => {
 
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                   {categories.map((categoria) => (
-                    <li key={categoria.id} >
-                      <a className="dropdown-item" href="#" onClick={()=> handleChangeCategories(categoria.description)} >
+                    <li key={categoria._id}>
+                      <Link
+                        className="dropdown-item"
+                        to={`/productos/${categoria._id}`}
+                        onClick={() =>
+                          handleChangeCategories(categoria.description)
+                        }
+                      >
                         {categoria.description}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -132,17 +93,6 @@ export const NavBar = () => {
               ) : (
                 <></>
               )}
-
-              {/* <form className="d-flex" role="search">
-              <input  className="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar"/>
-              <button className="btn btn-outline-success" type="submit">
-                Buscar
-              </button>
-            </form> */}
-
-              {/* <li className="nav-item">
-                <a className="nav-link disabled">Deshabilitado</a>
-              </li>*/}
             </ul>
             <form className="d-flex" role="search">
               <input
@@ -151,20 +101,24 @@ export const NavBar = () => {
                 placeholder="Buscar"
                 aria-label="Buscar"
               />
-              <button className="btn btn-outline-success" type="submit">
+              {/* <button className="btn btn-outline-success" type="submit">
                 Buscar
-              </button>
+              </button> */}
+              <BadgeButtonSearch />
             </form>
             <div>
-              <button className="btn btn-outline-success" type="button">
+              {/* <button className="btn btn-outline-success" type="button">
                 Mi Cuenta
-                <UserIcon />
-              </button>
+
+                
+              </button> */}
+              <BadgeButtonUser />
             </div>
             <div>
-              <button className="btn btn-outline-success" type="button">
+              {/* <button className="btn btn-outline-success" type="button">
                 Carrito
-              </button>
+              </button> */}
+              <BadgeButton numprod={0}/>
             </div>
           </div>
         </div>

@@ -6,6 +6,7 @@ import { CategorieState } from './context/CategorieState';
 import {ProductState} from './context/ProductState'
 // import { Footer } from './components/footer/Footer';
 import './App.css'
+import { ProductosProvider } from './context/ProductosContext';
 
 function App() {
 
@@ -13,11 +14,13 @@ function App() {
   return (
     <>
       {/* <NavBar/> */}
+      <ProductosProvider>
       <CategorieState>
         <ProductState>
       <MainRoutes/>
       </ProductState>
       </CategorieState>
+      </ProductosProvider>
       {/* <DropdownList/> */}
       {/* <Footer/> */}
       
