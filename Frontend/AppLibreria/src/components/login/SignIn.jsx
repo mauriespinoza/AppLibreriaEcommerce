@@ -7,14 +7,21 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { axiosClient } from "../../config/api";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 export const SignIn = () => {
-    const navigate = useNavigate();
+
+  const { signin, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+    
+
   const [authenticated, setAuthenticated] = useState(false);
   const [token, setToken] = useState('');
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -22,7 +29,12 @@ export const SignIn = () => {
       email: data.get("email"),
       password: data.get("password"),
     });
-    Login(data.get("email"),data.get("password"));
+    const infoLogin = {
+      correo: data.get("email"),
+      password: data.get("password"),
+    };
+    signin(infoLogin);
+    //Login(data.get("email"),data.get("password"));
   };
   const Login = async(mail,pass)=> {
     const response = await axiosClient.post("/login",{
@@ -37,6 +49,10 @@ export const SignIn = () => {
     }
     
   }
+  useEffect(() => {
+    if (isAuthenticated) navigate("/");
+  }, [isAuthenticated]);
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -90,7 +106,7 @@ export const SignIn = () => {
               </Link>
             </Grid> */}
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/register" variant="body2">
                 {"Registrate"}
               </Link>
             </Grid>

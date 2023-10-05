@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -19,11 +20,12 @@ import { Footer } from "../footer/Footer";
 // import SkipNextIcon from '@mui/icons-material/SkipNext';
 //import "./productDetails.css";
 export const ProductDetails = () => {
+
+  const {  removeFromCart, addToCart, count, setCount } = useProduct();
    // {id,nombre, descripcion,img,precio}
    const {id} = useParams();
     console.log("id:" + id);
-    const [count, setCount] = useState(1);
-    const {products, getProductById} = useProduct();
+    const {product, getProductById} = useProduct();
     useEffect(() => {
         // getProductsCategory();
         getProductById(id)
@@ -50,20 +52,26 @@ export const ProductDetails = () => {
       <CardMedia
         component="img"
         sx={{ width: 400 }}
-        image={products.imagen}
-        alt={products.descripcion}
+        image={product.imagen}
+        alt={product.descripcion}
       />
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography component="div" variant="h4">
-          {products.nombre}
+          {product.nombre}
           </Typography>
           <Typography variant="h5" color="text.secondary" component="div">
-          {products.descripcion}
+          {product.descripcion}
           </Typography>
           <Typography component="div" variant="h4" color="orange">
-          $ {FormatCLP(products.valor)}
+          $ {FormatCLP(product.valor)}
           </Typography>
           <ButtonGroup>
+          {/* <Button
+            aria-label="reduce"
+            onClick={() => {
+              setCount(Math.max(count - 1, 0));
+            }}
+          > */}
           <Button
             aria-label="reduce"
             onClick={() => {
@@ -75,17 +83,23 @@ export const ProductDetails = () => {
           <Button>
             {count}
           </Button>
-          <Button
+          {/* <Button
             aria-label="increase"
             onClick={() => {
               setCount(count + 1);
             }}
-          >
+          > */}
+           <Button
+            aria-label="increase"
+            onClick={() => {
+              setCount(count + 1);
+            }} >
+           
             <AddIcon fontSize="small" />
           </Button>
         </ButtonGroup>
         <div>
-        <Button variant="contained">Añadir al Carrito</Button>
+        <Button variant="contained" onClick={() => {addToCart({...product,count})}}>Añadir al Carrito</Button>
         </div>
           
         </CardContent>

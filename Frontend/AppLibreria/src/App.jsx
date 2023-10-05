@@ -7,7 +7,7 @@ import {ProductState} from './context/ProductState'
 // import { Footer } from './components/footer/Footer';
 import './App.css'
 import { ProductosProvider } from './context/ProductosContext';
-
+import { AuthProvider } from './context/AuthContext';
 function App() {
 
 
@@ -15,11 +15,13 @@ function App() {
     <>
       {/* <NavBar/> */}
       <ProductosProvider>
+      <AuthProvider>
       <CategorieState>
         <ProductState>
       <MainRoutes/>
       </ProductState>
       </CategorieState>
+      </AuthProvider>
       </ProductosProvider>
       {/* <DropdownList/> */}
       {/* <Footer/> */}

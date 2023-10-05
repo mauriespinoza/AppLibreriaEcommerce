@@ -18,6 +18,7 @@ export const NavBar = () => {
 
   const getAllCategories = async () => {
     const data = await getCategories();
+    console.log("getAllCategories: " + JSON.stringify(data))
     setCategories(data);
   };
 
@@ -29,7 +30,7 @@ export const NavBar = () => {
     console.log(categorie);
   };
 
-  console.log(categories);
+  // console.log(categories);
 
   return (
     <>
@@ -118,7 +119,7 @@ export const NavBar = () => {
               {/* <button className="btn btn-outline-success" type="button">
                 Carrito
               </button> */}
-              <BadgeButton numprod={0}/>
+              <BadgeButton numprod={1}/>
             </div>
           </div>
         </div>

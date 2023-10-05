@@ -64,12 +64,7 @@ export const ProductsList = () => {
               .slice(fisrstIndex, lastIndex)}
           </Row>
         </div>
-        <Pagination
-          productsPerPage={productsPerPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalProducts={totalProducts}
-        />
+        <Pagination/>
       </>
     );
   };

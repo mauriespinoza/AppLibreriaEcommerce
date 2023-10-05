@@ -1,10 +1,14 @@
+import { useProduct } from "../../hooks/useProduct";
 import "./pagination.css";
-export const Pagination = ({
-  productsPerPage,
-  totalProducts,
-  currentPage,
-  setCurrentPage,
-}) => {
+
+export const Pagination = () => {
+  const productsPerPage = 4;
+  const {products, setCurrentPage, currentPage} = useProduct();
+  
+  
+  const totalProducts = products.length;
+  
+
   const pageNumber = [];
   console.log(Math.ceil(totalProducts / productsPerPage));
   for (let i = 1; i <= Math.ceil(totalProducts / productsPerPage); i++) {
