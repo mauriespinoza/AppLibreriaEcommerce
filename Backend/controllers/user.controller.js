@@ -31,7 +31,7 @@ export const signUp = async (req, res) => { //createUser
 
         const verifyUser = await User.findOne({ rut: rut })
         if(verifyUser) {
-            return res.status(500).json({ message: 'El rut ingresado ya tiene una cuenta' })
+            return res.status(409).json({ message: 'El rut ingresado ya tiene una cuenta' })
         }
 
         const passwordEncrypt = await bcrypt.hash(password, 10)
