@@ -45,8 +45,24 @@ export const signUp = async (req, res) => { //createUser
             password: passwordEncrypt
         })
         const saveUser = await user.save();
-        res.status(201).json({message: `El usuario ${saveUser.nombre} ${saveUser.apellido} ha sido creado con éxito`})
+
+        //add token to new user
+        const expireTime = Math.floor(new Date()/ 1000) + 3600
+        const tokenUser = jwt.sign({
+            exp: expireTime,
+            data: {
+                id: saveUser._id,
+                correo: saveUser.correo,
+                nombre: saveUser.nombre,
+                apellido: saveUser.apellido,
+                edad: saveUser.edad
+            }
+        }, process.env.SECRET_KEY);
+        // res.status(201).json({message: 'User add success' });
+        res.status(201).json({message: `El usuario ${saveUser.nombre} ${saveUser.apellido} ha sido creado con éxito, id: ${saveUser._id}`, token: tokenUser });
+        
     }catch(error){
+        console.log(error)
         res.status(500).json({message: 'No pudimos crear el usuario'})
     }
 }
@@ -62,7 +78,7 @@ export const login = async(req, res) => {
 
         const verifyPassword = await bcrypt.compare(password, verifyUserByCorreo.password)
         if(!verifyPassword) {
-            return res.status(403).json({message: 'La contraseña es incorrecta'})
+            return res.status(403).json({message: 'Los datos ingresados no corresponden'})
         }
 
         const expireTime = Math.floor(new Date()/ 1000) + 3600
@@ -80,9 +96,9 @@ export const login = async(req, res) => {
             }
         }, process.env.SECRET_KEY)
 
-        res.json(token)
+        res.json({token: token, userdata: verifyUserByCorreo})
     } catch (error) {
-        res.status(403).json({message: 'No pudimos verificar tu cuenta'})
+        res.status(403).json({message: 'No logramos verificar tu cuenta'})
     }
 }
 
