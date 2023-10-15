@@ -13,7 +13,7 @@ router.post('/users', signUp)
 
 router.post('/login', login)
 
-router.put('/users/:rut', authRequire, updateUser)
+router.put('/users/:rut', updateUser)
 
 router.delete('/users/:rut', authRequire, deleteUserByRut)
 
